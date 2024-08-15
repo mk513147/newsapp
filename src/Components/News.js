@@ -26,8 +26,9 @@ export class News extends Component {
         };
     }
 
-    async componentDidMount() {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=758fb9d28589446b966ac18e564e47b6&page=1&pageSize=${this.props.pageSize}`;
+    
+    async updateNews() {
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=758fb9d28589446b966ac18e564e47b6&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({loading: true})
         let data = await fetch(url);
         let parsedData = await data.json();
@@ -37,32 +38,18 @@ export class News extends Component {
             loading: false,
         })
     }
-
-    handlePrev = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=758fb9d28589446b966ac18e564e47b6&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-        this.setState({loading: true})
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            page: this.state.page - 1,
-            article: parsedData.articles,
-            loading: false,
-        })
+    
+    async componentDidMount() {
+        this.updateNews();
+    }
+    handlePrev = () => {
+        this.setState({page: this.state.page - 1});
+        this.updateNews();
     }
 
-    handleNext = async () => {
-        if (!(this.state.page + 1> Math.ceil(this.state.totalResults / this.props.pageSize))) { 
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=758fb9d28589446b966ac18e564e47b6&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
-            this.setState({loading: true})
-            let data = await fetch(url);
-            let parsedData = await data.json();
-
-            this.setState({
-                page: this.state.page + 1,
-                article: parsedData.articles,
-                loading: false,
-            })
-        }
+    handleNext = () => {
+        this.setState({page: this.state.page + 1});
+        this.updateNews();
     }
 
     render() {
@@ -74,7 +61,8 @@ export class News extends Component {
                     <div className="row">
                         {!this.state.loading && this.state.article.map((element) => {
                             return <div className="col-md-4" key={element.url}>
-                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.image_url ? element.urlToImage : ""} newsUrl={element.url ? element.url : ""} />
+                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.image_url ? element.urlToImage : ""} 
+                                newsUrl={element.url ? element.url : ""} author={element.author} date={element.publishedAt} source= {element.source.name} />
                             </div>
                         })}
                     </div>
