@@ -8,7 +8,18 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import React, { Component } from 'react'
-
+const newsData = [
+  {
+    path: "/",
+    key: "general",
+    category: "general"
+  },
+  {
+    path: "/business",
+    key: "business",
+    category: "business"
+  },
+]
 export default class App extends Component {
   pageSize = 15;
   render() {
@@ -17,7 +28,13 @@ export default class App extends Component {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route exact path='/' element={<News key="general" pageSize={this.pageSize} country="in" category='general' />} />
+            {
+              newsData.map((element) => (
+                <Route exact path={element.path} element={<News key={element.key} pageSize={this.pageSize} country="in" category={element.category} />} />
+              ))
+            }
+            {/* <Route exact path='/' element={<News key="general" pageSize={this.pageSize} country="in" category='general' />} /> */}
+
             <Route exact path='/business' element={<News key="business" pageSize={this.pageSize} country="in" category='business' />} />
             <Route exact path='/entertainment' element={<News key="entertainment" pageSize={this.pageSize} country="in" category='entertainment' />} />
             <Route exact path='/health' element={<News key="health" pageSize={this.pageSize} country="in" category='health' />} />
