@@ -3,9 +3,10 @@ import defaultImage from './no_image.png'
 
 export default class Image extends Component {
   render() {
+    let { imageUrl } = this.props;
     return (
       <div>
-        <img src={defaultImage} className="card-img-top" alt="image ka url nahi diya hai" />
+        <img src={imageUrl ? imageUrl : defaultImage} className="card-img-top" alt="image ka url nahi diya hai" />
         {/* <img src={!{imageUrl} ? { defaultImage } : {imageUrl}} className="card-img-top" alt="image ka url nahi diya hai" /> */}
       </div>
     )
