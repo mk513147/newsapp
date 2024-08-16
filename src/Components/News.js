@@ -4,6 +4,7 @@ import Spinner from './Spinner'
 import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
 
+
 export class News extends Component {
     static defaultProps = {
         country: 'in',
@@ -24,8 +25,8 @@ export class News extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            article: [],
-            loading: false,
+            articles: [],
+            loading: true,
             page: 1,
             totalResults: 0,
         };
@@ -34,16 +35,19 @@ export class News extends Component {
 
 
     async updateNews() {
+        this.props.setProgress(10);
         const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=30cd54ccf8ec47779df2003715ad1516&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({ loading: true })
         let data = await fetch(url);
+        this.props.setProgress(30);
         let parsedData = await data.json();
+        this.props.setProgress(60);
         this.setState({
-            article: parsedData.articles,
+            articles: parsedData.articles,
             totalResults: parsedData.totalResults,
             loading: false,
-
         })
+        this.props.setProgress(100);
     }
 
     async componentDidMount() {
@@ -56,8 +60,8 @@ export class News extends Component {
         let data = await fetch(url);
         let parsedData = await data.json();
         this.setState({
-            article: this.state.article.concat(parsedData.articles),
-            totalResults: parsedData.totalResults,
+            articles: this.state.articles.concat(parsedData.articles),
+            totalResults: parsedData.totalResults
         })
     };
 
@@ -66,16 +70,16 @@ export class News extends Component {
             <>
 
                 <h1 className='text-center my-4'>Fresh News - Top {this.capitalFirstLetter(this.props.category)} Headlines</h1>
-                {!this.state.loading && <Spinner/>}
+                {this.state.loading && <Spinner/>}
                 <InfiniteScroll
-                    dataLength={this.state.items.length}
+                    dataLength={this.state.articles.length}
                     next={this.fetchMoreData}
-                    hasMore={this.state.article.length !== this.state.totalResults}
+                    hasMore={this.state.articles.length !== this.state.totalResults}
                     loader={<Spinner />}
                 >
                     <div className="container">
                         <div className="row">
-                            {this.state.article.map((element) => {
+                            {this.state.articles.map((element) => {
                                 return <div className="col-md-4" key={element.url}>
                                     <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.image_url ? element.urlToImage : ""}
                                         newsUrl={element.url ? element.url : ""} author={element.author} date={element.publishedAt} source={element.source.name} />

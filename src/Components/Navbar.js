@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 export class Navbar extends Component {
@@ -17,7 +16,7 @@ export class Navbar extends Component {
                                 <li className="nav-item">
                                     <a className="nav-link" aria-current="page" href="/">Home</a>
                                 </li>
-                                <li className='nav-item'><Link to="/business" className="nav-link">Business</Link></li>
+                                <li className='nav-item'><Link to="/business"  className="nav-link">Business</Link></li>
                                 <li className='nav-item'><Link to="/entertainment" className="nav-link">Entertainment</Link></li>
                                 <li className='nav-item'><Link to="/health" className="nav-link">Health</Link></li>
                                 <li className='nav-item'><Link to="/science" className="nav-link">Science</Link></li>

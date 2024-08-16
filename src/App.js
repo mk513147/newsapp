@@ -9,56 +9,69 @@ import {
 } from "react-router-dom";
 
 import React, { Component } from 'react'
+import LoadingBar from 'react-top-loading-bar'
 
 
 const newsData = [
   {
     path: "/",
-    key: "general",
+    key: 'k1',
     category: "general"
   },
   {
     path: "/business",
-    key: "business",
+    key: 'k2',
     category: "business"
   },
   {
     path: "/entertainment",
-    key: "entertainment",
+    key: 'k3',
     category: "entertainment"
   },
   {
     path: "/health",
-    key: "health",
+    key: 'k4',
     category: "health"
   },
   {
     path: "/science",
-    key: "science",
+    key: 'k6',
     category: "science"
   },
   {
     path: "/sports",
-    key: "sports",
+    key: 'k7',
     category: "sports"
   },
   {
     path: "/technology",
-    key: "technology",
+    key: 'k8',
     category: "technology"
   },
 ]
 export default class App extends Component {
   pageSize = 15;
+  state = {
+    progress: 0
+  }
+
+  setProgress = (progress)=> {
+    this.setState({progress: progress})
+  }
   render() {
     return (
       <div>
         <BrowserRouter>
           <Navbar />
+          <LoadingBar
+            color='cyan'
+            height={2}
+            progress={this.state.progress}
+          />
           <Routes>
             {
               newsData.map((element) => (
-                <Route exact path={element.path} element={<News key={element.key} pageSize={this.pageSize} country="in" category={element.category} />} />
+                <Route exact path={element.path} element={<News setProgress={this.setProgress} key={element.key} pageSize={this.pageSize} country="in" category={element.category} />} />
               ))
             }
           </Routes>
