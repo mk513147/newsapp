@@ -7,7 +7,10 @@ import {
   Routes,
   BrowserRouter,
 } from "react-router-dom";
+
 import React, { Component } from 'react'
+
+
 const newsData = [
   {
     path: "/",
