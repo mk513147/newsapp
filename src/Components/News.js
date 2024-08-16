@@ -9,13 +9,15 @@ export class News extends Component {
     static defaultProps = {
         country: 'in',
         pageSize: 8,
-        category: 'general'
+        category: 'general',
+        id: 0,
     }
 
     static propTypes = {
         country: PropTypes.string,
         pageSize: PropTypes.number,
         category: PropTypes.string,
+        id: PropTypes.number,
     }
 
     capitalFirstLetter = (string) => {

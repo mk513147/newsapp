@@ -15,37 +15,37 @@ import LoadingBar from 'react-top-loading-bar'
 const newsData = [
   {
     path: "/",
-    key: 'k1',
+    id: 1,
     category: "general"
   },
   {
     path: "/business",
-    key: 'k2',
+    id: 2,
     category: "business"
   },
   {
     path: "/entertainment",
-    key: 'k3',
+    id: 3,
     category: "entertainment"
   },
   {
     path: "/health",
-    key: 'k4',
+    id: 4,
     category: "health"
   },
   {
     path: "/science",
-    key: 'k6',
+    id: 6,
     category: "science"
   },
   {
     path: "/sports",
-    key: 'k7',
+    id: 7,
     category: "sports"
   },
   {
     path: "/technology",
-    key: 'k8',
+    id: 8,
     category: "technology"
   },
 ]
@@ -71,7 +71,7 @@ export default class App extends Component {
           <Routes>
             {
               newsData.map((element) => (
-                <Route exact path={element.path} element={<News setProgress={this.setProgress} key={element.key} pageSize={this.pageSize} country="in" category={element.category} />} />
+                <Route exact path={element.path} key={element.id} element={<News setProgress={this.setProgress}  pageSize={this.pageSize} country="in" category={element.category} />} />
               ))
             }
           </Routes>
