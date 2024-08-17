@@ -51,6 +51,7 @@ const newsData = [
 ]
 export default class App extends Component {
   pageSize = 15;
+  apiKey = process.env.REACT_APP_NEWS_API
   state = {
     progress: 0
   }
@@ -71,7 +72,7 @@ export default class App extends Component {
           <Routes>
             {
               newsData.map((element) => (
-                <Route exact path={element.path} key={element.id} element={<News setProgress={this.setProgress}  pageSize={this.pageSize} country="in" category={element.category} />} />
+                <Route exact path={element.path} key={element.id} element={<News setProgress={this.setProgress} apiKey={this.apiKey} pageSize={this.pageSize} country="in" category={element.category} />} />
               ))
             }
           </Routes>
