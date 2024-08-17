@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import defaultImage from './no_image.png'
 
-export default class Image extends Component {
-  render() {
-    let { imageUrl } = this.props;
+const Image = (props)=> {
+    let { imageUrl } = props;
     return (
       <div>
         <img src={imageUrl ? imageUrl: defaultImage} className="card-img-top" alt="url nahi diya hai" />
       </div>
     )
   }
-}
+
+export default Image
