@@ -8,7 +8,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import LoadingBar from 'react-top-loading-bar'
 
 
@@ -49,17 +49,13 @@ const newsData = [
     category: "technology"
   },
 ]
-export default class App extends Component {
-  pageSize = 15;
-  apiKey = process.env.REACT_APP_NEWS_API
-  state = {
-    progress: 0
-  }
 
-  setProgress = (progress)=> {
-    this.setState({progress: progress})
-  }
-  render() {
+const App = ()=> {
+  const pageSize = 15;
+  const apiKey = process.env.REACT_APP_NEWS_API
+
+  const [progress, setProgress] = useState(0);
+
     return (
       <div>
         <BrowserRouter>
@@ -67,12 +63,12 @@ export default class App extends Component {
           <LoadingBar
             color='cyan'
             height={2}
-            progress={this.state.progress}
+            progress={progress}
           />
           <Routes>
             {
               newsData.map((element) => (
-                <Route exact path={element.path} key={element.id} element={<News setProgress={this.setProgress} apiKey={this.apiKey} pageSize={this.pageSize} country="in" category={element.category} />} />
+                <Route exact path={element.path}  element={<News setProgress={setProgress} apiKey={apiKey} key={element.id} pageSize={pageSize} country="in" category={element.category} />} />
               ))
             }
           </Routes>
@@ -81,4 +77,5 @@ export default class App extends Component {
       </div>
     )
   }
-}
+
+export default App
